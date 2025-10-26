@@ -1,0 +1,12 @@
+{
+  "name": "learn-system",
+  "private": true,
+  "workspaces": [
+    "api",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace api",
+    "dev:frontend": "npm run dev --workspace frontend"
+  }
+}
