@@ -9,19 +9,15 @@ app.use(express.json());
 
 // Criar usuários
 app.post("/usuarios", async (req, res) => {
-  // const { name, email, age } = req.body;
+  const { name, email, age } = req.body;
   // Utiliznado o prisma para enviar a criação dos dados para o banco de dados configurado
   // prisma.user -> porque nosso schema tem o nome de user
-  await prisma.user.create({
-    data: {
-      email: req.body.email,
-      name: req.body.name,
-      age: req.body.age,
-    },
+  const newUser = await prisma.user.create({
+    data: { email, name, age },
   });
 
   // Ao cadastrar usuário, o front end obtém uma resposta:
-  res.status(201).json(req.body);
+  res.status(201).json(newUser);
 });
 
 // Listar todos os usuários
@@ -29,6 +25,32 @@ app.get("/usuarios", async (req, res) => {
   const users = await prisma.user.findMany();
 
   res.status(200).json(users);
+});
+
+// Editar um usuário
+app.put("/usuarios/:id", async (req, res) => {
+  const { name, age, email } = req.body;
+  const { id } = req.params;
+
+  try {
+    // Verifica se o email já existe em outro usuário
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: { name, age, email },
+    });
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    // Se for erro de violação de unique (email duplicado), o Prisma lança um erro específico
+    if (error.code === "P2002") {
+      return res
+        .status(400)
+        .json({ error: "Email já está em uso por outro usuário." });
+
+      console.error(error);
+      res.status(500).json({ error: "Erro ao atualizar usuário." });
+    }
+  }
 });
 
 app.listen(3000, () => {
