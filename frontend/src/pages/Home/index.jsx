@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 import { Trash, LoaderCircle } from "lucide-react";
 import api from "../../services/api.js";
@@ -46,6 +46,17 @@ function Home() {
       setTimeout(() => {
         setLoading(false);
       }, 1500);
+    }
+  };
+
+  const deleteUser = async (id) => {
+    if (!id) return;
+    try {
+      await api.delete(`/usuarios/${id}`);
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error);
+    } finally {
+      getUsers();
     }
   };
 
@@ -111,7 +122,7 @@ function Home() {
               Email: <span> {user.email}</span>
             </p>
           </div>
-          <button>
+          <button onClick={() => deleteUser(user.id)}>
             <Trash />
           </button>
         </div>
