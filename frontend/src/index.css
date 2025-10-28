@@ -8,5 +8,10 @@
 body {
   min-height: 100vh;
   width: 100vw;
-  background-color: #f9f9f9;
+  background: #213547;
+  background: linear-gradient(
+    90deg,
+    rgba(33, 53, 71, 1) 0%,
+    rgba(83, 91, 242, 1) 66%
+  );
 }
