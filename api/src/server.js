@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -6,6 +7,9 @@ const prisma = new PrismaClient();
 const app = express();
 // Para express poder trabalhar com json
 app.use(express.json());
+
+// Para poder permitir que nosso front faça req e receba res
+app.use(cors());
 
 // Criar usuários
 app.post("/usuarios", async (req, res) => {
