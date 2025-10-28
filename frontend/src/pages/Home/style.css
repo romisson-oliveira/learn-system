@@ -28,7 +28,6 @@ form {
     height: 40px;
     border: none;
     font-weight: bold;
-    cursor: pointer;
     color: #f9f9f9;
   }
 
@@ -60,6 +59,7 @@ form {
   & p {
     color: #f9f9f9;
     font-weight: bold;
+    font-size: 0.8em;
   }
 
   & span {
@@ -75,5 +75,16 @@ form {
     &:hover {
       opacity: 0.8;
     }
+  }
+}
+
+/* Animação do botão de cadastrar */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
   }
 }
